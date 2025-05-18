@@ -1,6 +1,9 @@
 package ma.enset.ebancking.services;
 
+import ma.enset.ebancking.dtos.BankAccountDTO;
+import ma.enset.ebancking.dtos.CurrentBankAccountDTO;
 import ma.enset.ebancking.dtos.CustomerDTO;
+import ma.enset.ebancking.dtos.SavingBankAccountDTO;
 import ma.enset.ebancking.entities.BankAccount;
 import ma.enset.ebancking.entities.CurrentAccount;
 import ma.enset.ebancking.entities.Customer;
@@ -13,15 +16,15 @@ import java.util.List;
 
 public interface BankAccountService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
-    CurrentAccount saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
-   SavingAccount saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
+    CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
+   SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
-    BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException;
+    BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     void debit(String accountId, double amount, String description) throws BalanceNotSufficientException, BankAccountNotFoundException;
     void credit(String accountId, double amount, String description) throws BankAccountNotFoundException;
     void transfer(String accountIdSource, String accountIdDestination, Double amount) throws BankAccountNotFoundException, BalanceNotSufficientException;
 
-    List<BankAccount> bankAccountList();
+    List<BankAccountDTO> bankAccountList();
 
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
 
