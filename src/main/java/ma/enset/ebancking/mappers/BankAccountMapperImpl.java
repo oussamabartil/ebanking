@@ -1,18 +1,30 @@
 package ma.enset.ebancking.mappers;
 
 
+import ma.enset.ebancking.dtos.AccountOperationDTO;
 import ma.enset.ebancking.dtos.CurrentBankAccountDTO;
 import ma.enset.ebancking.dtos.CustomerDTO;
 import ma.enset.ebancking.dtos.SavingBankAccountDTO;
+import ma.enset.ebancking.entities.AccountOperation;
 import ma.enset.ebancking.entities.CurrentAccount;
 import ma.enset.ebancking.entities.Customer;
 import ma.enset.ebancking.entities.SavingAccount;
+import ma.enset.ebancking.repositories.AccountOperationRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 //MapStruct => framework qui fait mapper
 @Service
 public class BankAccountMapperImpl {
+    private final AccountOperationRepository accountOperationRepository;
+
+    public BankAccountMapperImpl(AccountOperationRepository accountOperationRepository) {
+        this.accountOperationRepository = accountOperationRepository;
+    }
+
     public CustomerDTO fromCustomer(Customer customer) {
         // Le mapper il transfer les donnees d'un objet vers un autre objet
         CustomerDTO customerDTO = new CustomerDTO();
@@ -63,10 +75,10 @@ public class BankAccountMapperImpl {
         return currentAccount;
     }
 
-//    public AccountOperationDTO fromAccountOperation(AccountOperation accountOperation) {
-//        AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
-//        BeanUtils.copyProperties(accountOperation, accountOperationDTO);
-//        return accountOperationDTO;
-//    }
+    public AccountOperationDTO fromAccountOperation(AccountOperation accountOperation) {
+        AccountOperationDTO accountOperationDTO = new AccountOperationDTO();
+        BeanUtils.copyProperties(accountOperation, accountOperationDTO);
+        return accountOperationDTO;
+    }
 
 }
