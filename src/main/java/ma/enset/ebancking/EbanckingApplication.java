@@ -1,9 +1,11 @@
 package ma.enset.ebancking;
 
+import ma.enset.ebancking.entities.AccountOperation;
 import ma.enset.ebancking.entities.CurrentAccount;
 import ma.enset.ebancking.entities.Customer;
 import ma.enset.ebancking.entities.SavingAccount;
 import ma.enset.ebancking.enumes.AccountStatus;
+import ma.enset.ebancking.enumes.OperationType;
 import ma.enset.ebancking.repositories.AccountOperationRepository;
 import ma.enset.ebancking.repositories.BankAccountRepository;
 import ma.enset.ebancking.repositories.CustomerRepository;
@@ -55,6 +57,17 @@ public class EbanckingApplication {
                 bankAccountRepository.save(savingAccount);
 
 
+            });
+
+            bankAccountRepository.findAll().forEach(acc->{
+                for(int i=0;i<10;i++){
+                    AccountOperation accountOperation = new AccountOperation();
+                    accountOperation.setOperationDate(new Date());
+                    accountOperation.setAmount(Math.random()*120000);
+                    accountOperation.setType(Math.random()>0.5? OperationType.DEBIT:OperationType.CREDIT);
+                    accountOperation.setBankAccount(acc);
+                    accountOperationRepository.save(accountOperation);
+                }
             });
         };
     }
