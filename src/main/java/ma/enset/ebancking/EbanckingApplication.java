@@ -1,5 +1,6 @@
 package ma.enset.ebancking;
 
+import ma.enset.ebancking.dtos.CustomerDTO;
 import ma.enset.ebancking.entities.*;
 import ma.enset.ebancking.enumes.AccountStatus;
 import ma.enset.ebancking.enumes.OperationType;
@@ -108,7 +109,7 @@ public class EbanckingApplication {
     CommandLineRunner commandLineRunner1(BankAccountService bankAccountService){
         return args -> {
             Stream.of("Hassan","Yassine","Aicha").forEach(name-> {
-                Customer customer = new Customer();
+                CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name+"@gmail.com");
                 bankAccountService.saveCustomer(customer);
