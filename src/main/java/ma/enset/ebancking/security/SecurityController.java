@@ -44,7 +44,10 @@ public class SecurityController {
                 new UsernamePasswordAuthenticationToken(username, password)
         );
         Instant instant = Instant.now();
-        String scope = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
+        // String scope = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
+          String scope = authentication.getAuthorities().stream()
+            .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+            .collect(Collectors.joining(" "));
         JwtClaimsSet jwtClaimsSet = JwtClaimsSet.builder()
                 .issuedAt(instant)
                 .expiresAt(instant.plus(10, ChronoUnit.MINUTES))
