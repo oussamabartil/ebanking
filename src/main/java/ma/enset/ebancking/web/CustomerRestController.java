@@ -19,13 +19,15 @@ public class CustomerRestController {
     private BankAccountService bankAccountService;
 
     @GetMapping("/customers")
-    @PreAuthorize("hasAuthority('SCOPE_USER')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_USER')")
+
     public List<CustomerDTO> customers() {
         return bankAccountService.listCustomers();
     }
 
     @GetMapping("/customers/search")
-    @PreAuthorize("hasAuthority('SCOPE_USER')")
+ @PreAuthorize("hasAnyAuthority('SCOPE_ADMIN','SCOPE_USER')")
+
     public List<CustomerDTO> searchCustomers(@RequestParam(name = "keyword",defaultValue = "")String keyword) {
         return bankAccountService.searchCustomers("%"+keyword+"%");
     }
